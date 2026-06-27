@@ -1,0 +1,1 @@
+from recruit_ai.candidate.skill_parser import extract_skills

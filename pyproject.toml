@@ -1,0 +1,23 @@
+[project]
+name = "recruitrankai"
+version = "0.1.0"
+description = "AI-powered candidate ranking system using RAG, embeddings, and LLMs."
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "chromadb",
+    "ollama",
+    "rich",
+    "pymupdf",
+    "pandas",
+    "numpy",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

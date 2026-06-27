@@ -1,0 +1,40 @@
+from recruit_ai.job.parser import parse_job
+
+job = """
+Machine Learning Engineer
+
+REQUIRED SKILLS
+
+Python
+PyTorch
+SQL
+Machine Learning
+Deep Learning
+
+PREFERRED SKILLS
+
+Docker
+Kubernetes
+Linux
+
+EDUCATION
+
+B.Tech
+Computer Science
+
+EXPERIENCE
+
+2+ years
+
+RESPONSIBILITIES
+
+Build ML Models
+
+Deploy AI Systems
+
+Optimize Training Pipelines
+"""
+
+profile = parse_job(job)
+
+print(profile)
