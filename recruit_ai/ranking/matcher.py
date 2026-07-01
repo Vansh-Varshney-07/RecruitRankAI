@@ -11,13 +11,15 @@ def skill_match_score(
     """
 
     candidate_skills = {
-        skill.lower()
-        for skill in candidate.skills
+        s.name.lower()
+        for s in candidate.skills
+        if s.name
     }
 
     required_skills = {
-        skill.lower()
-        for skill in job.required_skills
+        s.lower()
+        for s in job.required_skills
+        if s
     }
 
     if not required_skills:

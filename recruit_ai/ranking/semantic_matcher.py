@@ -1,32 +1,52 @@
-import math
-
-from recruit_ai.embeddings.embedder import embed
+from difflib import SequenceMatcher
 
 
-def cosine_similarity(vec1, vec2):
+def semantic_similarity(a: str, b: str) -> float:
     """
-    Compute cosine similarity between two vectors.
+    Lightweight text similarity used as the local default.
+
+    This keeps ranking deterministic and offline. A true embedding-based
+    matcher can be added later without changing scorer contracts.
     """
 
-    dot = sum(a * b for a, b in zip(vec1, vec2))
+    return SequenceMatcher(
+        None,
+        str(a).lower(),
+        str(b).lower()
+    ).ratio()
 
-    norm1 = math.sqrt(sum(a * a for a in vec1))
 
-    norm2 = math.sqrt(sum(b * b for b in vec2))
+def similarity(a: str, b: str) -> float:
+    return semantic_similarity(a, b)
 
-    if norm1 == 0 or norm2 == 0:
+
+def semantic_skill_score(candidate, job):
+
+    if not job.required_skills:
         return 0.0
 
-    return dot / (norm1 * norm2)
+    matched = 0.0
 
+    candidate_skills = [
+        s.name.lower()
+        for s in candidate.skills
+        if s.name
+    ]
 
-def semantic_similarity(text1: str, text2: str) -> float:
+    for req in job.required_skills:
 
-    emb1 = embed(text1)
+        req = req.lower()
 
-    emb2 = embed(text2)
+        best = 0.0
 
-    return cosine_similarity(
-        emb1,
-        emb2,
-    )
+        for skill in candidate_skills:
+
+            score = semantic_similarity(req, skill)
+
+            if score > best:
+
+                best = score
+
+        matched += best
+
+    return matched / len(job.required_skills)

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: recruitrankai-api
+    env: docker
+    dockerfilePath: ./Dockerfile.api
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: RECRUITRANKAI_DATASET
+        value: data/redrob/candidates.jsonl
+      - key: RECRUITRANKAI_DEFAULT_JOB
+        value: data/raw/jobs/job1.txt
+      - key: RECRUITRANKAI_API_CORS_ORIGINS
+        value: "*"

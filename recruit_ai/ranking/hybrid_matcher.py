@@ -20,7 +20,7 @@ def hybrid_skill_score(
 
             score = semantic_similarity(
                 required_skill,
-                candidate_skill,
+                candidate_skill.name,
             )
 
             if score >= SIMILARITY_THRESHOLD:
